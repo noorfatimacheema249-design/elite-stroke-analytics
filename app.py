@@ -109,7 +109,7 @@ st.markdown("""
 tab1, tab2 = st.tabs(["Clinical Diagnostics Workspace", "Cohort Simulation Matrix Laboratory"])
 
 with tab1:
-    col1, col2 = st.columns([1, 1.1], gap="large")
+    col1, col2 = st.columns(2, gap="large")
     
     with col1:
         st.markdown('<div class="module-card">', unsafe_allow_html=True)
@@ -127,7 +127,6 @@ with tab1:
         impaired_loc = st.checkbox("Depressed / Altered Consciousness Index Verified (NIHSS 1a > 0)")
         glucose = st.number_input("Verified Laboratory Admission Serum Glucose Volume (mmol/L)", min_value=1.0, max_value=30.0, value=8.2, step=0.1)
         
-        # Pull baseline metrics calculations from back-end logic
         metrics = calculate_astral_probability(age, nihss, time_delay, visual_defect, glucose, impaired_loc)
         st.markdown('</div>', unsafe_allow_html=True)
         
@@ -135,7 +134,6 @@ with tab1:
         st.markdown('<div class="module-card">', unsafe_allow_html=True)
         st.markdown('<div class="module-title">Statistical Workspace & Forecast Yield</div>', unsafe_allow_html=True)
         
-        # High-Fidelity Metric Grid View Matrix
         st.markdown(f"""
             <div class="metric-grid">
                 <div class="metric-card"><div class="metric-value">{metrics["score"]}</div><div class="metric-label">ASTRAL Index</div></div>
@@ -144,21 +142,20 @@ with tab1:
             </div>
         """, unsafe_allow_html=True)
         
-        # Premium Minimalist Monochromatic Gauge Vector Layout
         fig_gauge = go.Figure(go.Indicator(
             mode = "gauge+number",
             value = metrics['probability'] * 100,
-            domain = {'x':, 'y':},
+            domain = {'x': [0, 1], 'y': [0, 1]},
             title = {'text': "Mathematical Variance of Unfavorable 3-Month Outcome (mRS 3-6)", 'font': {'size': 13, 'color': '#94A3B8', 'family': 'Inter'}},
             gauge = {
-                'axis': {'range': [None, 100], 'tickwidth': 1, 'tickcolor': "#475569", 'tickfont': {'color': '#64748B', 'family': 'Inter'}},
+                'axis': {'range': [0, 100], 'tickwidth': 1, 'tickcolor': "#475569", 'tickfont': {'color': '#64748B', 'family': 'Inter'}},
                 'bar': {'color': "#38BDF8"},
                 'bgcolor': "#1E293B",
                 'borderwidth': 0,
                 'steps': [
-                    {'range':, 'color': '#1E293B'},
-                    {'range':, 'color': '#111827'},
-                    {'range':, 'color': '#030712'}
+                    {'range': [0, 30], 'color': '#1E293B'},
+                    {'range': [30, 70], 'color': '#111827'},
+                    {'range': [70, 100], 'color': '#030712'}
                 ],
             }
         ))
@@ -171,7 +168,6 @@ with tab1:
         )
         st.plotly_chart(fig_gauge, use_container_width=True, config={'displayModeBar': False})
         
-        # Institutional Report Generation Interface Actions
         pdf_bytes = generate_pdf_report(patient_id, age, metrics)
         st.markdown("<div style='margin-top: 12px;'>", unsafe_allow_html=True)
         st.download_button(
@@ -184,6 +180,9 @@ with tab1:
         st.markdown("</div>", unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
+with tab2:
+    st.markdown('<div class="module-card">', unsafe_allow_html=True)
+    st.markdown('<div class="module-title">Biostatistical Simulation Framework & Core Analytics</div>', unsafe_allow_html=True)
 with tab2:
     st.markdown('<div class="module-card">', unsafe_allow_html=True)
     st.markdown('<div class="module-title">Biostatistical Simulation Framework & Core Analytics</div>', unsafe_allow_html=True)
@@ -200,7 +199,6 @@ with tab2:
         st.dataframe(df, use_container_width=True, hide_index=True)
         st.markdown("<br><br>", unsafe_allow_html=True)
         
-        # High-End Dark-Theme High-Contrast Tableau Distribution Plot
         fig_scatter = px.scatter(
             df, 
             x="Age", 
@@ -221,3 +219,4 @@ with tab2:
         )
         st.plotly_chart(fig_scatter, use_container_width=True, config={'displayModeBar': False})
     st.markdown('</div>', unsafe_allow_html=True)
+
