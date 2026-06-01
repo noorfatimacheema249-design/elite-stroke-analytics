@@ -207,7 +207,8 @@ with tab2:
             color="ASTRAL_Score",
             labels={"Unfavorable_Outcome_Risk": "Outcome Risk Projection (%)", "ASTRAL_Score": "Composite Score"},
             title="Regression Vector Distribution Matrix: Patient Variance Mapping",
-            color_continuous_scale=px.colors.sequential.Ice_r
+            color_continuous_scale="ice"
+
         )
         fig_scatter.update_layout(
             paper_bgcolor='rgba(0,0,0,0)', 
